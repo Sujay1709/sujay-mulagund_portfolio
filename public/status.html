@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Status — Sujay Mulagund</title>
+    <meta name="robots" content="noindex" />
+    <style>
+      :root {
+        --bg: #0f0f0f; --panel: #171717; --fg: #ededed; --muted: #8a8a8a;
+        --border: #262626; --ok: #34d17a; --bad: #e0483d; --wait: #d8a52e;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; background: var(--bg); color: var(--fg);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 640px; margin: 0 auto; padding: 64px 24px; }
+      h1 { font-size: 1.4rem; font-weight: 600; margin: 0 0 4px; }
+      .sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 32px; }
+      .banner {
+        display: flex; align-items: center; gap: 12px; padding: 16px 18px;
+        border: 1px solid var(--border); border-radius: 12px; background: var(--panel);
+        margin-bottom: 24px; font-weight: 500;
+      }
+      .row {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 18px; border: 1px solid var(--border); border-radius: 12px;
+        background: var(--panel); margin-bottom: 12px;
+      }
+      .name { font-size: 0.95rem; }
+      .desc { color: var(--muted); font-size: 0.8rem; margin-top: 2px; }
+      .pill { display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--wait); }
+      .dot.ok { background: var(--ok); } .dot.bad { background: var(--bad); }
+      .foot { color: var(--muted); font-size: 0.78rem; margin-top: 28px; }
+      a { color: var(--fg); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>System status</h1>
+      <p class="sub">Live client-side checks for sujaygopal.com. Refresh to re-run.</p>
+
+      <div class="banner"><span id="overall-dot" class="dot"></span><span id="overall">Checking…</span></div>
+
+      <div class="row">
+        <div><div class="name">Website</div><div class="desc">Homepage responds</div></div>
+        <span class="pill"><span id="dot-site" class="dot"></span><span id="txt-site">Checking…</span></span>
+      </div>
+      <div class="row">
+        <div><div class="name">Static assets</div><div class="desc">Images &amp; bundles load</div></div>
+        <span class="pill"><span id="dot-asset" class="dot"></span><span id="txt-asset">Checking…</span></span>
+      </div>
+      <div class="row">
+        <div><div class="name">HTTPS</div><div class="desc">Served over TLS</div></div>
+        <span class="pill"><span id="dot-tls" class="dot"></span><span id="txt-tls">Checking…</span></span>
+      </div>
+
+      <p class="foot">
+        Last checked: <span id="ts">—</span> · This page runs in your browser.
+        For 24/7 external monitoring see RELIABILITY.md.
+        <br /><a href="/">← Back to site</a>
+      </p>
+    </div>
+
+    <script>
+      function set(id, state, label) {
+        document.getElementById('dot-' + id).className = 'dot ' + state;
+        document.getElementById('txt-' + id).textContent = label;
+      }
+      async function reachable(url) {
+        try {
+          await fetch(url, { method: 'GET', mode: 'no-cors', cache: 'no-store' });
+          return true; // opaque response resolves = reachable
+        } catch (e) { return false; }
+      }
+      (async () => {
+        const origin = location.origin;
+        const site = await reachable(origin + '/');
+        set('site', site ? 'ok' : 'bad', site ? 'Operational' : 'Unreachable');
+
+        const asset = await reachable(origin + '/og.png');
+        set('asset', asset ? 'ok' : 'bad', asset ? 'Operational' : 'Unreachable');
+
+        const tls = location.protocol === 'https:';
+        set('tls', tls ? 'ok' : 'bad', tls ? 'Secure' : 'Not HTTPS');
+
+        const allOk = site && asset && tls;
+        document.getElementById('overall-dot').className = 'dot ' + (allOk ? 'ok' : 'bad');
+        document.getElementById('overall').textContent = allOk
+          ? 'All systems operational'
+          : 'Some checks failed — see below';
+        document.getElementById('ts').textContent = new Date().toLocaleString();
+      })();
+    </script>
+  </body>
+</html>
