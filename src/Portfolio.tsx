@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion, type Variants } from 'motion/react';
 
 /**
  * Listening — curated song lists (just for fun). Each track links to a Spotify
@@ -330,6 +331,26 @@ export default function Portfolio() {
   const link =
     'underline underline-offset-4 decoration-[var(--soft)] hover:decoration-[var(--fg)] transition';
 
+  // Motion: subtle, purposeful, and disabled when the user prefers reduced motion.
+  const reduce = useReducedMotion();
+  const up = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 24 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.15 },
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+      };
+  const heroContainer: Variants | undefined = reduce
+    ? undefined
+    : { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } } };
+  const heroItem: Variants | undefined = reduce
+    ? undefined
+    : {
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
+      };
+
   return (
     <div
       style={{ ...theme, background: 'var(--bg)', color: 'var(--fg)', fontFamily: sans }}
@@ -365,21 +386,27 @@ export default function Portfolio() {
         </header>
 
         {/* Intro / About */}
-        <section id="top" className="pt-10 pb-20">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--muted)]">
+        <motion.section
+          id="top"
+          className="pt-10 pb-20"
+          variants={heroContainer}
+          initial={reduce ? false : 'hidden'}
+          animate={reduce ? false : 'show'}
+        >
+          <motion.div variants={heroItem} className="mb-5 inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-3 py-1 text-xs text-[var(--muted)]">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-60 animate-ping"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
             </span>
             {STATUS}
-          </div>
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-6">
+          </motion.div>
+          <motion.p variants={heroItem} className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-6">
             AI Engineer · M.S. Data Science @ ASU — Tempe, Arizona
-          </p>
-          <h1 style={{ fontFamily: serif }} className="text-3xl sm:text-[2.6rem] leading-[1.25] font-normal max-w-2xl">
+          </motion.p>
+          <motion.h1 variants={heroItem} style={{ fontFamily: serif }} className="text-3xl sm:text-[2.6rem] leading-[1.25] font-normal max-w-2xl">
             I build AI systems that hold up in production.
-          </h1>
-          <div className="mt-8 space-y-4 text-[var(--muted)] leading-relaxed max-w-2xl">
+          </motion.h1>
+          <motion.div variants={heroItem} className="mt-8 space-y-4 text-[var(--muted)] leading-relaxed max-w-2xl">
             <p>
               I ship AI end to end: retrieval-augmented pipelines, agent backends, and
               the evaluation harnesses that catch model regressions before users do — all
@@ -397,17 +424,17 @@ export default function Portfolio() {
               ChiSquareX Technologies, owning Python/SQL ETL over 500K+ records. Four
               production systems shipped, all with CI/CD.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          <motion.div variants={heroItem} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a href="mailto:sujaymulagund19@gmail.com" className={link}>Email</a>
             <a href="https://www.linkedin.com/in/sujay-mulagund-0ab588269" target="_blank" rel="noopener noreferrer" className={link}>LinkedIn</a>
             <a href="https://github.com/Sujay1709" target="_blank" rel="noopener noreferrer" className={link}>GitHub</a>
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
 
         {/* Selected work */}
-        <section id="work" className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} id="work" className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Selected Work</h2>
           <ul className="space-y-12">
             {projects.map((p) => (
@@ -433,10 +460,10 @@ export default function Portfolio() {
               </li>
             ))}
           </ul>
-        </section>
+        </motion.section>
 
         {/* Case study */}
-        <section id="case-study" className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} id="case-study" className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Case Study</h2>
           <h3 style={{ fontFamily: serif }} className="text-xl sm:text-2xl mb-8">
             <a
@@ -461,10 +488,10 @@ export default function Portfolio() {
               </div>
             ))}
           </dl>
-        </section>
+        </motion.section>
 
         {/* Systems */}
-        <section id="systems" className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} id="systems" className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Systems</h2>
           <p className="text-[var(--muted)] mb-10 max-w-xl leading-relaxed">
             Architecture sketches of the pipelines and evaluation loops behind the work
@@ -480,10 +507,10 @@ export default function Portfolio() {
               </figure>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Experience */}
-        <section id="experience" className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} id="experience" className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Experience</h2>
           <ul className="space-y-10">
             {experience.map((j) => (
@@ -506,10 +533,10 @@ export default function Portfolio() {
               </li>
             ))}
           </ul>
-        </section>
+        </motion.section>
 
         {/* Education & credentials */}
-        <section className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Education &amp; Credentials</h2>
           <ul className="space-y-10">
             {education.map((e) => (
@@ -583,10 +610,10 @@ export default function Portfolio() {
               CFE (ACFE) — in progress.
             </p>
           </div>
-        </section>
+        </motion.section>
 
         {/* Toolkit */}
-        <section className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Toolkit</h2>
           <dl className="space-y-5">
             {toolkit.map(([k, v]) => (
@@ -596,11 +623,11 @@ export default function Portfolio() {
               </div>
             ))}
           </dl>
-        </section>
+        </motion.section>
 
         {/* Writing & Shares — renders only when the writings list is non-empty */}
         {writings.length > 0 && (
-          <section id="writing" className="py-14 border-t border-[var(--border)]">
+          <motion.section {...up} id="writing" className="py-14 border-t border-[var(--border)]">
             <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Writing &amp; Shares</h2>
             <ul className="space-y-8">
               {writings.map((w) => (
@@ -621,11 +648,11 @@ export default function Portfolio() {
                 </li>
               ))}
             </ul>
-          </section>
+          </motion.section>
         )}
 
         {/* Listening — curated lists, just for fun */}
-        <section id="listening" className="py-14 border-t border-[var(--border)]">
+        <motion.section {...up} id="listening" className="py-14 border-t border-[var(--border)]">
           <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Listening</h2>
           <p className="text-[var(--muted)] mb-10 max-w-xl leading-relaxed">
             On repeat while I build — just for fun. Tap any track to open it on Spotify.
@@ -656,10 +683,10 @@ export default function Portfolio() {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Contact */}
-        <footer id="contact" className="py-16 border-t border-[var(--border)]">
+        <motion.footer {...up} id="contact" className="py-16 border-t border-[var(--border)]">
           <h2 style={{ fontFamily: serif }} className="text-2xl sm:text-3xl mb-6">
             Let&apos;s build AI that ships.
           </h2>
@@ -675,7 +702,7 @@ export default function Portfolio() {
           <p className="mt-12 text-xs text-[var(--muted)]">
             © {new Date().getFullYear()} Sujay Mulagund — Tempe, Arizona
           </p>
-        </footer>
+        </motion.footer>
       </div>
     </div>
   );
