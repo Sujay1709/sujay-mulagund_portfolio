@@ -32,3 +32,4 @@ pnpm-debug.log*
 .claude/skills/ui-ux-pro-max/
 .agents/
 skills-lock.json
+.vercel
