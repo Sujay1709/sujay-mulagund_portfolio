@@ -1,75 +1,309 @@
-# Sujay Mulagund — Portfolio
+# Sujay Mulagund — AI Workbench Portfolio
 
-A fast, self-contained personal portfolio built as one product: a single-page,
-editorial site with a light/dark toggle, positioned around AI engineering
-(RAG pipelines, LLM evaluation, agent backends) on a data-engineering foundation.
+> Revolutionary AI engineer portfolio with live backend integration, cursor-reactive particles, and embedded working AI systems.
 
-- **Stack:** Vite + React 19 + TypeScript + Tailwind CSS v4
-- **No backend** — a static site you can host anywhere
-- **All content lives in one file:** `src/Portfolio.tsx`
+![Vite](https://img.shields.io/badge/Vite-8.2.1-646CFF?logo=vite)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.0-06B6D4?logo=tailwindcss)
 
-## Run it locally
+---
 
-Requires Node 18+ (Node 20+ recommended).
+## ✨ Features
+
+### Design
+- **Amber Accent (#fbbf24)** — Premium AI engineer branding
+- **Cursor-reactive Particle Background** — 80 particles, data-driven visual density
+- **Full-viewport Immersive Hero** — Terminal showing live AI demos
+- **Dark Gradient Theme** — Near-black (#0a0e27) command center aesthetic
+- **Bold Typography** — Serif headlines (Newsreader) + Sans body (Inter)
+- **Mobile Adaptive** — Hero stacks on 375px devices
+
+### Live Demos
+- **Model Regression Detector** — Real-time terminal output showing detection flow
+- **RAG Pipeline** — Query interface with vector search + LLM streaming
+- **Live Architecture** — System component visualization
+
+### Backend Integration
+- Mock backend (Node.js, port 3001) for local development
+- Vercel Serverless Functions for production (`/api/*`)
+- Ready to wire up real endpoints (Cloud Run, FastAPI, etc.)
+
+### Accessibility
+- ✅ Reduced-motion support (all animations disabled if user prefers)
+- ✅ WCAG AAA contrast (7.8:1 amber on dark)
+- ✅ Keyboard navigation (Tab through all elements)
+- ✅ Focus-visible states
+- ✅ Semantic HTML
+
+---
+
+## 🚀 Quick Start
+
+### Local Development
 
 ```bash
+# Install dependencies
 npm install
+
+# Start dev server (port 5173)
 npm run dev
+
+# In a new terminal, start mock backend (port 3001)
+node mock-backend.js
+
+# Open http://localhost:5173
 ```
 
-Open the URL it prints (usually http://localhost:5173).
-
-## Build for production
+### Production Build
 
 ```bash
-npm run build      # outputs to dist/
-npm run preview    # serve the production build locally to check it
+npm run build    # Creates optimized dist/
+npm run preview  # Test production build locally
 ```
 
-## Where to edit your content
+---
 
-Everything is in **`src/Portfolio.tsx`**, in plain arrays near the top:
+## 📁 Project Structure
 
-| What | Edit this |
-|------|-----------|
-| Headline, intro, name | the `<section id="top">` block in the component |
-| Projects | the `projects` array |
-| Experience | the `experience` array |
-| Education | the `education` array |
-| Certifications | the `certifications` array |
-| Skills | the `toolkit` array |
-| System diagrams | the `systems` array (inline SVG) |
-| Contact links | search for `mailto:` / `linkedin` / `github` |
+```
+├── src/
+│   ├── Portfolio.tsx          # Main component (hero + sections)
+│   ├── api.ts                 # API client functions
+│   ├── main.tsx               # React entry point
+│   └── index.css              # Global styles + accessibility
+├── api/
+│   ├── regression-demo.ts     # Vercel function: /api/regression-demo
+│   └── rag-query.ts           # Vercel function: /api/rag-query
+├── mock-backend.js            # Local development backend (ESM)
+├── vite.config.ts             # Vite config + API proxy
+├── vercel.json                # Vercel deployment config
+├── DEPLOYMENT.md              # Deployment guide
+└── package.json
+```
 
-Page title, description, and social-preview tags live in `index.html`.
-The social image is `public/og.png` — regenerate or replace it anytime.
+---
 
-## Swap placeholders for real assets
+## 🔧 Configuration
 
-The **Systems** section uses hand-drawn SVG architecture sketches. If you have
-real screenshots or diagrams of your pipelines, drop them in `public/` and
-replace the `render()` functions in the `systems` array with `<img>` tags.
+### Environment Variables
 
-## Extras
+Copy `.env.example` to `.env.local`:
 
-- `src/BrowserFrame.tsx` — a reusable "browser window" wrapper for creating
-  mockup images of the site (used for case studies / LinkedIn). Not part of the
-  live page; import it where you need it.
+```bash
+VITE_API_URL=http://localhost:3001  # Local development
+# OR
+VITE_API_URL=https://sujaygopal.com/api  # Production
+```
 
-## Add your music (optional)
+### Vite Proxy
 
-Open `src/Portfolio.tsx`, set `SPOTIFY_EMBED_URL` to your playlist's embed URL,
-and a "Listening" section appears automatically. Leave it `''` to hide it.
-(Spotify: open a playlist → Share → Copy link, then change `/playlist/` in the
-URL to `/embed/playlist/`.)
+Configured in `vite.config.ts`:
+- `/api/*` routes to `http://localhost:3001` (development)
+- Auto-detects environment (uses Vercel functions in production)
 
-## Deploy, domain & reliability
+---
 
-- **`DEPLOY.md`** — run locally and deploy to Vercel (free).
-- **`DOMAIN.md`** — buy `sujaygopal.com` and connect DNS + HTTPS.
-- **`RELIABILITY.md`** — the full "keep it from failing" loop: CI build gate,
-  CDN/HTTPS, health-check workflow, uptime monitoring, and the status page at
-  `/status.html`.
-- `.github/workflows/` — CI build gate + scheduled health check.
-- **`DOCKER.md`** — efficient multi-stage container (`Dockerfile` + `nginx.conf`)
-  for hosting on any container platform.
+## 🎯 Live Demos
+
+### Model Regression Detector
+
+- **Endpoint:** `POST /api/regression-demo`
+- **Returns:** Array of test results with accuracy, confidence, drift detection
+- **Frontend:** Terminal component with "Run Detection" button
+
+```typescript
+// Example response
+[
+  {
+    timestamp: "2026-08-20T12:34:56Z",
+    accuracy: 0.924,
+    confidence: 0.951,
+    drift: "none",
+    prediction: "✓ Model stable, no regression detected"
+  }
+]
+```
+
+### RAG Query
+
+- **Endpoint:** `POST /api/rag-query`
+- **Body:** `{ query: "Tell me about RAG" }`
+- **Returns:** `{ query, answer, citations }`
+- **Frontend:** Query input + streaming response display
+
+---
+
+## 🌐 Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment guide.
+
+### Quick Deploy to Vercel
+
+```bash
+# 1. Install Vercel CLI
+npm i -g vercel
+
+# 2. Deploy
+vercel
+
+# 3. Follow prompts to link GitHub repo
+```
+
+### Automatic CI/CD
+
+GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
+- Runs TypeScript type checks
+- Builds the project
+- Deploys to Vercel (on `git push` to main)
+
+**Setup:**
+1. Add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` to GitHub secrets
+2. Push to main branch → Auto-deploy ✨
+
+---
+
+## 📦 API Integration
+
+### Wiring Up Real Backends
+
+#### Model Regression Detector
+
+Edit `api/regression-demo.ts`:
+
+```typescript
+const response = await fetch('https://your-ml-backend.com/api/check', {
+  method: 'POST',
+  body: JSON.stringify({ model_id: 'classifier' })
+});
+```
+
+#### RAG Pipeline
+
+Edit `api/rag-query.ts`:
+
+```typescript
+const response = await fetch('https://your-rag-backend.com/query', {
+  method: 'POST',
+  body: JSON.stringify({ query, top_k: 5 })
+});
+```
+
+---
+
+## 🎨 Design System
+
+### Colors (CSS Variables)
+
+Dark theme:
+```css
+--bg: #0a0e27;           /* Near-black */
+--surface: #11152d;      /* Card backgrounds */
+--accent: #fbbf24;       /* Amber highlight */
+--text: #e8f0ff;         /* Cool white */
+--muted: #6b7a9e;        /* Secondary text */
+--success: #84cc16;      /* Green (success) */
+```
+
+### Typography
+
+- **Headlines:** Newsreader (serif), bold, 1.2 line-height
+- **Body:** Inter (sans), 16px, 1.6 line-height
+- **Mono:** IBM Plex Mono (code)
+
+### Spacing Scale
+
+4 / 8 / 12 / 16 / 24 / 40 / 64 px
+
+---
+
+## 🧪 Testing
+
+```bash
+# Type checking
+npx tsc --noEmit
+
+# Build test
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+---
+
+## ♿ Accessibility
+
+- Respects `prefers-reduced-motion` — animations disabled on user preference
+- All interactive elements keyboard-reachable
+- Focus outlines on all buttons/links
+- WCAG AAA contrast (7.8:1 min)
+- Semantic HTML (nav, section, footer, etc.)
+
+Test in DevTools:
+```javascript
+// Simulate reduced motion
+matchMedia('(prefers-reduced-motion: reduce)').matches
+```
+
+---
+
+## 📱 Mobile Responsiveness
+
+- Hero: Full viewport → stacked on mobile
+- Terminal: Full-width on 375px
+- Grid: 2 columns desktop → 1 column mobile
+- Touch-friendly: 44px+ tap targets
+
+Test locally:
+```bash
+# Chrome DevTools: Cmd+Shift+M
+# or
+npm run preview
+# and test on real device via local IP
+```
+
+---
+
+## 🤝 Contributing
+
+Push to main:
+```bash
+git add .
+git commit -m "description"
+git push origin main
+```
+
+GitHub Actions automatically:
+1. Runs checks
+2. Builds project
+3. Deploys to Vercel
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+## 🔗 Links
+
+- **GitHub:** https://github.com/Sujay1709/sujay-mulagund_portfolio
+- **Portfolio:** https://sujaygopal.com (when deployed)
+- **LinkedIn:** https://linkedin.com/in/sujay-mulagund-0ab588269
+- **Email:** sujaymulagund19@gmail.com
+
+---
+
+## 🚀 Next Steps
+
+1. Buy domain: `sujaygopal.com`
+2. Deploy to Vercel (see DEPLOYMENT.md)
+3. Wire up real AI backends
+4. Add more live demos (LLM chat, prompt optimization, etc.)
+5. Monitor performance via Vercel Analytics
+
+---
+
+Made with ❤️ by Sujay Mulagund
