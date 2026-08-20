@@ -502,7 +502,7 @@ export default function Portfolio() {
           </p>
           <div className="grid gap-6 sm:grid-cols-2">
             {systems.map((s, i) => (
-              <figure key={i} className={`overflow-hidden rounded-xl border border-[var(--border)] ${i === 0 ? 'sm:col-span-2' : ''}`}>
+              <figure key={i} className={`overflow-hidden rounded-xl border border-[var(--border)] hover:border-[var(--muted)] transition-colors ${i === 0 ? 'sm:col-span-2' : ''}`}>
                 <div className={i === 0 ? 'aspect-[16/6]' : 'aspect-[16/9]'}>{s.render()}</div>
                 <figcaption className="text-sm text-[var(--muted)] px-4 py-3 border-t border-[var(--border)]">
                   {s.caption}
@@ -594,7 +594,8 @@ export default function Portfolio() {
                           href={link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="shrink-0 text-xs text-[var(--muted)] underline underline-offset-2 decoration-[var(--soft)] hover:decoration-[var(--fg)] hover:text-[var(--fg)]"
+                          className="shrink-0 text-xs text-[var(--muted)] underline underline-offset-2 decoration-[var(--soft)] hover:decoration-[var(--accent)] hover:text-[var(--accent)] transition-colors"
+                          aria-label={`${c.href ? 'Verify' : 'View'} ${c.title} (opens in new tab)`}
                         >
                           {c.href ? 'Verify ↗' : 'View ↗'}
                         </a>
@@ -674,7 +675,8 @@ export default function Portfolio() {
                           href={`https://open.spotify.com/search/${encodeURIComponent(t.q)}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hover:underline underline-offset-4 decoration-[var(--soft)]"
+                          className="hover:underline underline-offset-4 decoration-[var(--soft)] hover:decoration-[var(--accent)] hover:text-[var(--fg)] transition-colors"
+                          aria-label={`Listen to ${t.title} on Spotify (opens in new tab)`}
                         >
                           {t.title}
                         </a>
