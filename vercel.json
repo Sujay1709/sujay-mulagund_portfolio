@@ -3,34 +3,5 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "vite",
-  "outputDirectory": "dist",
-  "env": {
-    "VITE_API_URL": {
-      "description": "API endpoint for live demos (backend URL)",
-      "example": "https://api.sujaygopal.com"
-    }
-  },
-  "functions": {
-    "api/regression-demo.ts": {
-      "runtime": "nodejs18.x",
-      "memory": 512,
-      "maxDuration": 10
-    },
-    "api/rag-query.ts": {
-      "runtime": "nodejs18.x",
-      "memory": 1024,
-      "maxDuration": 30
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/regression-demo",
-      "destination": "/api/regression-demo"
-    },
-    {
-      "source": "/api/rag-query",
-      "destination": "/api/rag-query"
-    }
-  ],
-  "domains": ["sujaygopal.com", "www.sujaygopal.com"]
+  "outputDirectory": "dist"
 }

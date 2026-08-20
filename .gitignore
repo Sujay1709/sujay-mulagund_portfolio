@@ -33,3 +33,8 @@ pnpm-debug.log*
 .agents/
 skills-lock.json
 .vercel
+.env*
+
+# local scratch (device_bash cannot rm; safe to delete manually)
+_to_delete/
+.claude/settings.local.json
