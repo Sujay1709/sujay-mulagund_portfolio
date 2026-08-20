@@ -32,7 +32,7 @@ function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -371,7 +371,7 @@ export default function Portfolio() {
         show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
       };
 
-  const scrollReveal: Variants | undefined = reduce
+  const scrollReveal = reduce
     ? undefined
     : {
         initial: { opacity: 0, y: 32 },
