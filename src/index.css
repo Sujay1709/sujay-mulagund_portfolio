@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+/* Accessibility & interaction polish (ui-ux-pro-max pre-delivery checklist):
+   visible keyboard focus, pointer affordance, and reduced-motion support. */
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button { cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
