@@ -390,7 +390,7 @@ export default function Portfolio() {
         {/* Intro / About */}
         <motion.section
           id="top"
-          className="pt-10 pb-20"
+          className="pt-8 sm:pt-10 pb-16 sm:pb-20"
           variants={heroContainer}
           initial={reduce ? false : 'hidden'}
           animate={reduce ? false : 'show'}
@@ -430,8 +430,8 @@ export default function Portfolio() {
 
           <motion.div variants={heroItem} className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a href="mailto:sujaymulagund19@gmail.com" className={link}>Email</a>
-            <a href="https://www.linkedin.com/in/sujay-mulagund-0ab588269" target="_blank" rel="noopener noreferrer" className={link}>LinkedIn</a>
-            <a href="https://github.com/Sujay1709" target="_blank" rel="noopener noreferrer" className={link}>GitHub</a>
+            <a href="https://www.linkedin.com/in/sujay-mulagund-0ab588269" target="_blank" rel="noopener noreferrer" className={link} aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+            <a href="https://github.com/Sujay1709" target="_blank" rel="noopener noreferrer" className={link} aria-label="GitHub (opens in new tab)">GitHub</a>
           </motion.div>
         </motion.section>
 
@@ -445,7 +445,7 @@ export default function Portfolio() {
                 <div>
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     {p.href ? (
-                      <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: serif }} className="text-xl sm:text-2xl hover:opacity-70 transition-opacity">
+                      <a href={p.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: serif }} className="text-xl sm:text-2xl hover:opacity-70 transition-opacity" aria-label={`${p.title} (opens in new tab)`}>
                         {p.title} ↗
                       </a>
                     ) : (
@@ -473,6 +473,7 @@ export default function Portfolio() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:opacity-70 transition-opacity"
+              aria-label="Catching LLM regressions before they ship (opens in new tab)"
             >
               Catching LLM regressions before they ship ↗
             </a>
@@ -555,7 +556,7 @@ export default function Portfolio() {
             ))}
           </ul>
 
-          <div className="mt-12">
+          <motion.div {...up} className="mt-12">
             <span className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] block mb-6">Certificates</span>
             <div className="grid gap-5 sm:grid-cols-2">
               {certs.map((c) => {
@@ -603,15 +604,15 @@ export default function Portfolio() {
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
-          <div className="mt-8 grid grid-cols-[1fr] sm:grid-cols-[9rem_1fr] gap-2 sm:gap-6">
+          <motion.div {...up} className="mt-8 grid grid-cols-[1fr] sm:grid-cols-[9rem_1fr] gap-2 sm:gap-6">
             <span className="text-sm text-[var(--muted)] pt-1">Publication</span>
             <p className="text-[var(--muted)] leading-relaxed max-w-xl">
               Peer-reviewed: <span className="text-[var(--fg)]">Ensemble ML for Disease Prediction</span> (2024).
               CFE (ACFE) — in progress.
             </p>
-          </div>
+          </motion.div>
         </motion.section>
 
         {/* Toolkit */}
@@ -698,8 +699,8 @@ export default function Portfolio() {
           </p>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a href="mailto:sujaymulagund19@gmail.com" className={link}>sujaymulagund19@gmail.com</a>
-            <a href="https://www.linkedin.com/in/sujay-mulagund-0ab588269" target="_blank" rel="noopener noreferrer" className={link}>LinkedIn</a>
-            <a href="https://github.com/Sujay1709" target="_blank" rel="noopener noreferrer" className={link}>GitHub</a>
+            <a href="https://www.linkedin.com/in/sujay-mulagund-0ab588269" target="_blank" rel="noopener noreferrer" className={link} aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+            <a href="https://github.com/Sujay1709" target="_blank" rel="noopener noreferrer" className={link} aria-label="GitHub (opens in new tab)">GitHub</a>
           </div>
           <p className="mt-12 text-xs text-[var(--muted)]">
             © {new Date().getFullYear()} Sujay Mulagund — Tempe, Arizona
