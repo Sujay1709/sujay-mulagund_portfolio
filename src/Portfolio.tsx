@@ -314,6 +314,7 @@ export default function Portfolio() {
         '--soft': '#3a3a3a',
         '--ink': '#e8e8e8',
         '--border': '#262626',
+        '--accent': '#60a5fa',
       } as React.CSSProperties)
     : ({
         '--bg': '#faf9f6',
@@ -323,13 +324,14 @@ export default function Portfolio() {
         '--soft': '#cfccc4',
         '--ink': '#1a1a1a',
         '--border': '#e5e2da',
+        '--accent': '#3b82f6',
       } as React.CSSProperties);
 
   const serif = "'Newsreader', Georgia, serif";
   const sans = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
 
   const link =
-    'underline underline-offset-4 decoration-[var(--soft)] hover:decoration-[var(--fg)] transition';
+    'underline underline-offset-4 decoration-[var(--soft)] hover:decoration-[var(--accent)] transition';
 
   // Motion: subtle, purposeful, and disabled when the user prefers reduced motion.
   const reduce = useReducedMotion();
@@ -400,13 +402,13 @@ export default function Portfolio() {
             </span>
             {STATUS}
           </motion.div>
-          <motion.p variants={heroItem} className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-6">
+          <motion.p variants={heroItem} className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-6">
             AI Engineer · M.S. Data Science @ ASU — Tempe, Arizona
           </motion.p>
           <motion.h1 variants={heroItem} style={{ fontFamily: serif }} className="text-3xl sm:text-[2.6rem] leading-[1.25] font-normal max-w-2xl">
             I build AI systems that hold up in production.
           </motion.h1>
-          <motion.div variants={heroItem} className="mt-8 space-y-4 text-[var(--muted)] leading-relaxed max-w-2xl">
+          <motion.div variants={heroItem} className="mt-8 space-y-4 text-[var(--muted)] leading-relaxed max-w-2xl text-base">
             <p>
               I ship AI end to end: retrieval-augmented pipelines, agent backends, and
               the evaluation harnesses that catch model regressions before users do — all
@@ -435,7 +437,7 @@ export default function Portfolio() {
 
         {/* Selected work */}
         <motion.section {...up} id="work" className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Selected Work</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-10">Selected Work</h2>
           <ul className="space-y-12">
             {projects.map((p) => (
               <li key={p.title} className="grid grid-cols-[3.5rem_1fr] gap-4 sm:gap-6">
@@ -450,7 +452,7 @@ export default function Portfolio() {
                       <h3 style={{ fontFamily: serif }} className="text-xl sm:text-2xl">{p.title}</h3>
                     )}
                     {p.tag && (
-                      <span className="text-[0.7rem] uppercase tracking-[0.14em] text-[var(--muted)] border border-[var(--border)] rounded-full px-2 py-0.5">
+                      <span className="text-[0.7rem] uppercase tracking-[0.14em] text-[var(--accent)] border border-[var(--accent)] rounded-full px-2 py-0.5 opacity-70">
                         {p.tag}
                       </span>
                     )}
@@ -464,7 +466,7 @@ export default function Portfolio() {
 
         {/* Case study */}
         <motion.section {...up} id="case-study" className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Case Study</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Case Study</h2>
           <h3 style={{ fontFamily: serif }} className="text-xl sm:text-2xl mb-8">
             <a
               href="https://github.com/Sujay1709/Model-Regression-Detection-System"
@@ -492,7 +494,7 @@ export default function Portfolio() {
 
         {/* Systems */}
         <motion.section {...up} id="systems" className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Systems</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Systems</h2>
           <p className="text-[var(--muted)] mb-10 max-w-xl leading-relaxed">
             Architecture sketches of the pipelines and evaluation loops behind the work
             above.
@@ -511,7 +513,7 @@ export default function Portfolio() {
 
         {/* Experience */}
         <motion.section {...up} id="experience" className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Experience</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-10">Experience</h2>
           <ul className="space-y-10">
             {experience.map((j) => (
               <li key={j.role + j.org} className="grid grid-cols-[1fr] sm:grid-cols-[9rem_1fr] gap-2 sm:gap-6">
@@ -537,7 +539,7 @@ export default function Portfolio() {
 
         {/* Education & credentials */}
         <motion.section {...up} className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Education &amp; Credentials</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-10">Education &amp; Credentials</h2>
           <ul className="space-y-10">
             {education.map((e) => (
               <li key={e.degree} className="grid grid-cols-[1fr] sm:grid-cols-[9rem_1fr] gap-2 sm:gap-6">
@@ -554,7 +556,7 @@ export default function Portfolio() {
           </ul>
 
           <div className="mt-12">
-            <span className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] block mb-6">Certificates</span>
+            <span className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] block mb-6">Certificates</span>
             <div className="grid gap-5 sm:grid-cols-2">
               {certs.map((c) => {
                 const link = c.href || c.img;
@@ -614,7 +616,7 @@ export default function Portfolio() {
 
         {/* Toolkit */}
         <motion.section {...up} className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Toolkit</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-10">Toolkit</h2>
           <dl className="space-y-5">
             {toolkit.map(([k, v]) => (
               <div key={k} className="grid grid-cols-[1fr] sm:grid-cols-[9rem_1fr] gap-1 sm:gap-6">
@@ -628,7 +630,7 @@ export default function Portfolio() {
         {/* Writing & Shares — renders only when the writings list is non-empty */}
         {writings.length > 0 && (
           <motion.section {...up} id="writing" className="py-14 border-t border-[var(--border)]">
-            <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-10">Writing &amp; Shares</h2>
+            <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-10">Writing &amp; Shares</h2>
             <ul className="space-y-8">
               {writings.map((w) => (
                 <li key={w.title} className="grid grid-cols-[5rem_1fr] gap-4 sm:gap-6">
@@ -653,7 +655,7 @@ export default function Portfolio() {
 
         {/* Listening — curated lists, just for fun */}
         <motion.section {...up} id="listening" className="py-14 border-t border-[var(--border)]">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-[var(--muted)] mb-3">Listening</h2>
+          <h2 className="text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)] mb-3">Listening</h2>
           <p className="text-[var(--muted)] mb-10 max-w-xl leading-relaxed">
             On repeat while I build — just for fun. Tap any track to open it on Spotify.
           </p>
