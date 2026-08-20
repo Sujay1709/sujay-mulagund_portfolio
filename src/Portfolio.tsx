@@ -26,6 +26,170 @@ type RegressionResult = {
 };
 
 // ============================================================================
+// CONTENT — projects, experience, education, certificates, toolkit, listening
+// ============================================================================
+
+type Project = { year: string; title: string; blurb: string; tag?: string; href?: string };
+
+const projects: Project[] = [
+  {
+    year: '2026',
+    title: 'Model Regression Detection System',
+    blurb:
+      'An LLM behavioral-regression detector for a customer-support email classifier. A 4-axis diff engine — label shift, confidence drift, semantic change, reasoning divergence — with CI-ready exit codes, versioned prompt management, and a 75-case hand-curated golden dataset backed by 16 offline pytest cases.',
+    tag: 'LLM eval / CI',
+    href: 'https://github.com/Sujay1709/Model-Regression-Detection-System',
+  },
+  {
+    year: '2026',
+    title: 'DocuMind — Production RAG Pipeline',
+    blurb:
+      'A modular, typed RAG pipeline: PDF → chunking → Ollama embeddings → ChromaDB vector store → cross-encoder reranking → streamed answers with citations. Full CI/CD (ruff + pytest), Dockerized with persistent state — deployed to HuggingFace Spaces with real users.',
+    tag: 'RAG / pipeline',
+    href: 'https://github.com/Sujay1709/documind-rag',
+  },
+  {
+    year: '2025–26',
+    title: 'AutoHub — Real-Time AI Backend',
+    blurb:
+      'A real-time AI backend on Google Cloud Run: FastAPI + Google ADK + Gemini 2.5 Flash, with per-request history replay, nginx credential isolation, and a multi-stage Docker build.',
+    tag: 'Backend / cloud',
+    href: 'https://autohub-render.com',
+  },
+  {
+    year: '2025',
+    title: 'Conversational SQL Assistant — NL-to-SQL RAG',
+    blurb:
+      'Vector-based schema retrieval (cosine ≥ 0.87) across 15+ schemas, reaching 91.3% accuracy (F1 0.91) on 500+ queries and cutting analyst SQL workload by 65%.',
+    tag: 'NL-to-SQL',
+    href: 'https://github.com/Sujay1709/Conversational-SQL-Assistant',
+  },
+];
+
+type Job = { period: string; role: string; org: string; location: string; points: string[] };
+
+const experience: Job[] = [
+  {
+    period: 'Jan 2023 – Jun 2024',
+    role: 'Data Analyst · Team Lead',
+    org: 'ChiSquareX Technologies',
+    location: 'Bangalore, India',
+    points: [
+      'Owned Python/SQL ETL pipelines over 500K+ records, with data-validation and anomaly-detection frameworks — 10% error reduction and audit-ready reporting.',
+      'Built streaming data-transformation workflows across multi-source inputs; tracked pipeline health, throughput, and accuracy metrics.',
+    ],
+  },
+  {
+    period: 'Jul 2024 – Sep 2024',
+    role: 'Python Developer Intern',
+    org: 'PractWorks',
+    location: 'Bangalore, India',
+    points: [
+      'Built Python/SQL ETL to extract, transform, and load multi-source data, with schema validation and quality-gate logic for downstream pipelines.',
+    ],
+  },
+];
+
+type Edu = { period: string; degree: string; school: string; location: string; detail: string };
+
+const education: Edu[] = [
+  {
+    period: 'Sep 2025 – Present',
+    degree: 'M.S. Data Science, Analytics & Engineering',
+    school: 'Arizona State University — Ira A. Fulton Schools of Engineering',
+    location: 'Tempe, AZ · GPA 3.56 / 4.0',
+    detail:
+      'Data Engineering · AWS Cloud & Distributed Computing · Statistical ML · Big Data (PySpark, Databricks) · Data Processing at Scale · Risk Modeling · Time-Series Analysis',
+  },
+  {
+    period: 'Aug 2021 – May 2025',
+    degree: 'B.Tech. Computer Science & Engineering',
+    school: 'SRM Institute of Science and Technology',
+    location: 'Chennai, India · GPA 8.12 / 10',
+    detail: 'Algorithms · DBMS · OOP · Software Engineering',
+  },
+];
+
+type Cert = { title: string; issuer: string; date: string; img?: string; href?: string };
+
+const certs: Cert[] = [
+  {
+    title: 'Applied AI Foundations',
+    issuer: 'OpenAI Academy',
+    date: 'Aug 2026',
+    img: '/certs/openai-applied-ai.jpg',
+  },
+  {
+    title: 'AI Engineer for Data Scientists (Associate)',
+    issuer: 'DataCamp',
+    date: 'Jul 2026',
+    img: '/certs/datacamp-ai-engineer.jpg',
+  },
+  {
+    title: 'AWS Academy Graduate — Machine Learning Foundations',
+    issuer: 'AWS Academy',
+    date: 'Mar 2023',
+    img: '/certs/aws-ml-foundations.jpg',
+    href: 'https://www.credly.com/go/vr7yLqvI',
+  },
+  {
+    title: 'Google AI Essentials',
+    issuer: 'Coursera',
+    date: 'Jun 2026',
+    img: '/certs/google-ai-essentials.jpg',
+    href: 'https://www.coursera.org/verify/specialization/64NYBXNA802P',
+  },
+];
+
+const toolkit: [string, string][] = [
+  ['Data engineering', 'Spark / PySpark · Databricks · Structured Streaming · ETL design · Delta Lake · SQL optimization'],
+  ['LLM & AI', 'LLM evaluation · RAG · LangChain · ChromaDB · Ollama · Gemini 2.5 · Google ADK · vector search'],
+  ['Cloud & DevOps', 'AWS (S3 · EC2 · Lambda · Glue · Kinesis · Redshift) · Docker · GitHub Actions · Cloud Run · FastAPI'],
+  ['Languages & data', 'Python · SQL · TypeScript · Node.js · PostgreSQL · Snowflake · MongoDB · Power BI'],
+];
+
+/**
+ * Listening — curated track lists. Each track links to a Spotify search so the
+ * link never rots. To swap in a real embed, set SPOTIFY_EMBED_URL below to a
+ * playlist embed URL (Share → Copy link, then change /playlist/ to
+ * /embed/playlist/) and the iframe renders instead of the lists.
+ */
+const SPOTIFY_EMBED_URL = '';
+
+type Track = { title: string; meta?: string; q: string };
+
+const playlists: { name: string; note: string; tracks: Track[] }[] = [
+  {
+    name: 'The Weeknd — on repeat',
+    note: 'His most-streamed, roughly in order.',
+    tracks: [
+      { title: 'Blinding Lights', q: 'Blinding Lights The Weeknd' },
+      { title: 'Starboy', meta: 'feat. Daft Punk', q: 'Starboy The Weeknd' },
+      { title: 'Save Your Tears', q: 'Save Your Tears The Weeknd' },
+      { title: 'The Hills', q: 'The Hills The Weeknd' },
+      { title: "Can't Feel My Face", q: "Can't Feel My Face The Weeknd" },
+      { title: 'Die For You', q: 'Die For You The Weeknd' },
+      { title: 'Call Out My Name', q: 'Call Out My Name The Weeknd' },
+      { title: 'I Feel It Coming', meta: 'feat. Daft Punk', q: 'I Feel It Coming The Weeknd' },
+    ],
+  },
+  {
+    name: 'Old Bollywood — classics',
+    note: 'Evergreen Hindi favourites.',
+    tracks: [
+      { title: 'Lag Jaa Gale', meta: 'Lata Mangeshkar · 1964', q: 'Lag Jaa Gale Lata Mangeshkar' },
+      { title: 'Mere Sapno Ki Rani', meta: 'Kishore Kumar · 1969', q: 'Mere Sapno Ki Rani Kishore Kumar' },
+      { title: 'Pal Pal Dil Ke Paas', meta: 'Kishore Kumar · 1973', q: 'Pal Pal Dil Ke Paas Kishore Kumar' },
+      { title: 'Chaudhvin Ka Chand', meta: 'Mohammed Rafi · 1960', q: 'Chaudhvin Ka Chand Mohammed Rafi' },
+      { title: 'Kabhi Kabhie Mere Dil Mein', meta: 'Mukesh · 1976', q: 'Kabhi Kabhie Mere Dil Mein Mukesh' },
+      { title: 'Tere Bina Zindagi Se', meta: 'Lata & Kishore · 1975', q: 'Tere Bina Zindagi Se Aandhi' },
+      { title: 'Yeh Shaam Mastani', meta: 'Kishore Kumar · 1970', q: 'Yeh Shaam Mastani Kishore Kumar' },
+      { title: 'Roop Tera Mastana', meta: 'Kishore Kumar · 1969', q: 'Roop Tera Mastana Kishore Kumar' },
+    ],
+  },
+];
+
+// ============================================================================
 // PARTICLE BACKGROUND — Cursor-reactive, data-driven
 // ============================================================================
 function ParticleBackground() {
@@ -401,12 +565,21 @@ export default function Portfolio() {
             Sujay
           </a>
           <nav className="flex items-center gap-4">
-            <a href="#demo" className="text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors hidden sm:inline">
-              Live Demo
-            </a>
-            <a href="#work" className="text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors hidden sm:inline">
-              Work
-            </a>
+            {[
+              ['#demo', 'Live Demo'],
+              ['#work', 'Work'],
+              ['#experience', 'Experience'],
+              ['#education', 'Education'],
+              ['#listening', 'Listening'],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors hidden md:inline"
+              >
+                {label}
+              </a>
+            ))}
             <button
               onClick={() => setDark(!dark)}
               className="w-10 h-10 rounded-lg border border-[var(--accent)]/30 hover:border-[var(--accent)] transition-colors flex items-center justify-center"
@@ -494,26 +667,7 @@ export default function Portfolio() {
             </h2>
 
             <div className="space-y-12">
-              {[
-                {
-                  year: '2026',
-                  title: 'Model Regression Detection System',
-                  desc: 'LLM behavioral-regression detector: 4-axis diff engine, 75-case golden dataset, CI-ready',
-                  href: 'https://github.com/Sujay1709/Model-Regression-Detection-System',
-                },
-                {
-                  year: '2026',
-                  title: 'DocuMind — Production RAG Pipeline',
-                  desc: 'Modular RAG: PDF → embeddings → ChromaDB → reranking → streamed answers. Dockerized, deployed.',
-                  href: 'https://github.com/Sujay1709/documind-rag',
-                },
-                {
-                  year: '2025–26',
-                  title: 'AutoHub — Real-Time AI Backend',
-                  desc: 'FastAPI + Gemini 2.5 Flash on Cloud Run. Per-request history, nginx isolation, multi-stage Docker.',
-                  href: 'https://autohub-render.com',
-                },
-              ].map((p) => (
+              {projects.map((p) => (
                 <motion.div
                   key={p.title}
                   {...scrollReveal}
@@ -521,14 +675,194 @@ export default function Portfolio() {
                 >
                   <a href={p.href} target="_blank" rel="noopener noreferrer">
                     <span className="text-sm text-[var(--accent)] font-mono">{p.year}</span>
+                    {p.tag && (
+                      <span className="ml-3 text-xs font-mono text-[var(--muted)] border border-[var(--accent)]/20 rounded-full px-2.5 py-1">
+                        {p.tag}
+                      </span>
+                    )}
                     <h3 style={{ fontFamily: serif }} className="text-2xl font-bold mt-2 group-hover:text-[var(--accent)] transition-colors">
                       {p.title} ↗
                     </h3>
-                    <p className="text-[var(--muted)] mt-2">{p.desc}</p>
+                    <p className="text-[var(--muted)] mt-2 leading-relaxed max-w-2xl">{p.blurb}</p>
                   </a>
                 </motion.div>
               ))}
             </div>
+          </div>
+        </motion.section>
+
+        {/* EXPERIENCE */}
+        <motion.section {...scrollReveal} id="experience" className="relative px-6 sm:px-8 py-20 border-t border-[var(--accent)]/10">
+          <div className="max-w-4xl mx-auto">
+            <h2 style={{ fontFamily: serif }} className="text-3xl sm:text-4xl font-bold mb-12">
+              Experience
+            </h2>
+            <ul className="space-y-10">
+              {experience.map((j) => (
+                <li key={j.role + j.org} className="grid grid-cols-[1fr] sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
+                  <span className="text-sm font-mono text-[var(--accent)] pt-1">{j.period}</span>
+                  <div>
+                    <h3 style={{ fontFamily: serif }} className="text-xl font-bold">{j.role}</h3>
+                    <p className="text-sm mt-1">
+                      {j.org} <span className="text-[var(--muted)]">· {j.location}</span>
+                    </p>
+                    <ul className="mt-4 space-y-2.5">
+                      {j.points.map((pt, k) => (
+                        <li key={k} className="text-[var(--muted)] leading-relaxed relative pl-5">
+                          <span className="absolute left-0 top-[0.7em] w-2 h-px bg-[var(--accent)]/50" />
+                          {pt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.section>
+
+        {/* EDUCATION & CREDENTIALS */}
+        <motion.section {...scrollReveal} id="education" className="relative px-6 sm:px-8 py-20 border-t border-[var(--accent)]/10">
+          <div className="max-w-4xl mx-auto">
+            <h2 style={{ fontFamily: serif }} className="text-3xl sm:text-4xl font-bold mb-12">
+              Education &amp; Credentials
+            </h2>
+            <ul className="space-y-10">
+              {education.map((e) => (
+                <li key={e.degree} className="grid grid-cols-[1fr] sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
+                  <span className="text-sm font-mono text-[var(--accent)] pt-1">{e.period}</span>
+                  <div>
+                    <h3 style={{ fontFamily: serif }} className="text-xl font-bold">{e.degree}</h3>
+                    <p className="text-sm mt-1">
+                      {e.school} <span className="text-[var(--muted)]">· {e.location}</span>
+                    </p>
+                    <p className="mt-3 text-[var(--muted)] leading-relaxed">{e.detail}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Certificates */}
+            <div className="mt-16">
+              <h3 className="text-xs uppercase tracking-[0.25em] text-[var(--muted)] mb-6">Certificates</h3>
+              <div className="grid gap-6 sm:grid-cols-2">
+                {certs.map((c) => {
+                  const link = c.href || c.img;
+                  return (
+                    <motion.div
+                      key={c.title}
+                      {...scrollReveal}
+                      className="group rounded-xl border border-[var(--accent)]/20 hover:border-[var(--accent)]/50 transition-colors overflow-hidden bg-[var(--surface)]"
+                    >
+                      <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+                        <div className="aspect-[3/2] overflow-hidden bg-[var(--bg)]">
+                          <img
+                            src={c.img}
+                            alt={`${c.title} — ${c.issuer}`}
+                            loading="lazy"
+                            className="w-full h-full object-cover object-top group-hover:opacity-90 transition-opacity"
+                          />
+                        </div>
+                      </a>
+                      <div className="p-4 border-t border-[var(--accent)]/10 flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="text-sm leading-snug">{c.title}</p>
+                          <p className="text-xs text-[var(--muted)] mt-1 font-mono">{c.issuer} · {c.date}</p>
+                        </div>
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 text-xs text-[var(--accent)] hover:underline"
+                          aria-label={`${c.href ? 'Verify' : 'View'} ${c.title} (opens in new tab)`}
+                        >
+                          {c.href ? 'Verify ↗' : 'View ↗'}
+                        </a>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="mt-10 grid grid-cols-[1fr] sm:grid-cols-[10rem_1fr] gap-2 sm:gap-8">
+              <span className="text-sm font-mono text-[var(--accent)] pt-1">Publication</span>
+              <p className="text-[var(--muted)] leading-relaxed">
+                Peer-reviewed: <span className="text-[var(--text)]">Ensemble ML for Disease Prediction</span> (2024).
+                CFE (ACFE) — in progress.
+              </p>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* TOOLKIT */}
+        <motion.section {...scrollReveal} id="toolkit" className="relative px-6 sm:px-8 py-20 border-t border-[var(--accent)]/10">
+          <div className="max-w-4xl mx-auto">
+            <h2 style={{ fontFamily: serif }} className="text-3xl sm:text-4xl font-bold mb-12">
+              Toolkit
+            </h2>
+            <dl className="space-y-6">
+              {toolkit.map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[1fr] sm:grid-cols-[10rem_1fr] gap-1 sm:gap-8">
+                  <dt className="text-sm font-mono text-[var(--accent)]">{k}</dt>
+                  <dd className="text-sm leading-relaxed text-[var(--muted)]">{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </motion.section>
+
+        {/* LISTENING */}
+        <motion.section {...scrollReveal} id="listening" className="relative px-6 sm:px-8 py-20 border-t border-[var(--accent)]/10">
+          <div className="max-w-4xl mx-auto">
+            <h2 style={{ fontFamily: serif }} className="text-3xl sm:text-4xl font-bold mb-4">
+              Listening
+            </h2>
+            <p className="text-[var(--muted)] mb-12">
+              On repeat while I build — just for fun. Tap any track to open it on Spotify.
+            </p>
+
+            {SPOTIFY_EMBED_URL ? (
+              <iframe
+                src={SPOTIFY_EMBED_URL}
+                title="Spotify playlist"
+                width="100%"
+                height="380"
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                className="rounded-xl border border-[var(--accent)]/20"
+              />
+            ) : (
+              <div className="grid gap-10 sm:grid-cols-2">
+                {playlists.map((pl) => (
+                  <div key={pl.name} className="bg-[var(--surface)] border border-[var(--accent)]/20 rounded-xl p-6">
+                    <h3 style={{ fontFamily: serif }} className="text-xl font-bold">{pl.name}</h3>
+                    <p className="text-xs text-[var(--muted)] mt-1 mb-5 font-mono">{pl.note}</p>
+                    <ol className="space-y-3">
+                      {pl.tracks.map((t, i) => (
+                        <li key={t.title} className="flex items-baseline gap-3 text-sm">
+                          <span className="text-[var(--accent)] font-mono tabular-nums w-5 shrink-0">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <span className="min-w-0">
+                            <a
+                              href={`https://open.spotify.com/search/${encodeURIComponent(t.q)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-[var(--accent)] transition-colors"
+                              aria-label={`Listen to ${t.title} on Spotify (opens in new tab)`}
+                            >
+                              {t.title}
+                            </a>
+                            {t.meta && <span className="text-[var(--muted)]"> · {t.meta}</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </motion.section>
 
