@@ -1,309 +1,137 @@
-# Sujay Mulagund — AI Workbench Portfolio
+# Sujay Mulagund — AI Engineer Portfolio
 
-> Revolutionary AI engineer portfolio with live backend integration, cursor-reactive particles, and embedded working AI systems.
+Live at **[sujaygopal.space](https://www.sujaygopal.space)**
 
-![Vite](https://img.shields.io/badge/Vite-8.2.1-646CFF?logo=vite)
+A single-page AI-engineer portfolio with a cursor-reactive particle background, an
+immersive terminal-style hero, and embedded live-system demos (model regression
+detection, RAG query), backed by real project, experience, education, and
+certificate data.
+
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.0-06B6D4?logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss)
 
 ---
 
-## ✨ Features
+## Stack
 
-### Design
-- **Amber Accent (#fbbf24)** — Premium AI engineer branding
-- **Cursor-reactive Particle Background** — 80 particles, data-driven visual density
-- **Full-viewport Immersive Hero** — Terminal showing live AI demos
-- **Dark Gradient Theme** — Near-black (#0a0e27) command center aesthetic
-- **Bold Typography** — Serif headlines (Newsreader) + Sans body (Inter)
-- **Mobile Adaptive** — Hero stacks on 375px devices
+Vite + React 19 + TypeScript + Tailwind CSS v4 + [Motion](https://motion.dev)
+(entrance/scroll animations). No backend required to run the site — the two
+live demos below optionally call Vercel serverless functions.
 
-### Live Demos
-- **Model Regression Detector** — Real-time terminal output showing detection flow
-- **RAG Pipeline** — Query interface with vector search + LLM streaming
-- **Live Architecture** — System component visualization
-
-### Backend Integration
-- Mock backend (Node.js, port 3001) for local development
-- Vercel Serverless Functions for production (`/api/*`)
-- Ready to wire up real endpoints (Cloud Run, FastAPI, etc.)
-
-### Accessibility
-- ✅ Reduced-motion support (all animations disabled if user prefers)
-- ✅ WCAG AAA contrast (7.8:1 amber on dark)
-- ✅ Keyboard navigation (Tab through all elements)
-- ✅ Focus-visible states
-- ✅ Semantic HTML
-
----
-
-## 🚀 Quick Start
-
-### Local Development
+## Run it locally
 
 ```bash
-# Install dependencies
 npm install
-
-# Start dev server (port 5173)
 npm run dev
-
-# In a new terminal, start mock backend (port 3001)
-node mock-backend.js
-
-# Open http://localhost:5173
 ```
 
-### Production Build
+Open the URL it prints (usually http://localhost:5173).
 
 ```bash
-npm run build    # Creates optimized dist/
-npm run preview  # Test production build locally
+npm run build      # type-checks (tsc -b) then builds to dist/
+npm run preview    # serve the production build locally
 ```
 
----
+## What's on the page
 
-## 📁 Project Structure
+- **Hero** — immersive terminal showing the live Model Regression Detector
+- **Live Systems** — embedded RAG pipeline query demo + architecture overview
+- **Selected Work** — Model Regression Detection System, DocuMind (RAG pipeline),
+  AutoHub (real-time AI backend), Conversational SQL Assistant
+- **Experience** — ChiSquareX Technologies, PractWorks
+- **Education & Credentials** — M.S. Data Science @ ASU, B.Tech CSE @ SRM, plus
+  four certificate cards (OpenAI, DataCamp, AWS Academy, Google AI Essentials)
+  with verify links
+- **Toolkit** — skills grouped by domain (data engineering, LLM & AI, cloud &
+  DevOps, languages & data)
+- **Listening** — curated Weeknd + old-Bollywood track lists, each linking to
+  Spotify search (swap in a real playlist embed via `SPOTIFY_EMBED_URL` near
+  the top of `src/Portfolio.tsx`)
+- **Contact** — email, LinkedIn, GitHub
+
+All content lives in plain arrays near the top of **`src/Portfolio.tsx`** —
+edit `projects`, `experience`, `education`, `certs`, `toolkit`, and `playlists`
+directly.
+
+## Live demos & API
+
+Two Vercel serverless functions back the "Live Systems" section:
+
+| Route | File | Purpose |
+|---|---|---|
+| `POST /api/regression-demo` | `api/regression-demo.ts` | Simulated model-regression detection run |
+| `POST /api/rag-query` | `api/rag-query.ts` | Simulated RAG query response |
+
+Both currently return **simulated** output (randomized accuracy/drift, canned
+answers) rather than calling a real ML backend — wire in a real endpoint by
+editing those two files before presenting the demos as production systems, or
+soften the section copy in `Portfolio.tsx` to describe them as illustrative.
+
+For local development, `node mock-backend.js` runs an equivalent mock on port
+3001 (see `vite.config.ts` for the dev proxy).
+
+## Deployment
+
+Hosted on Vercel, connected to this GitHub repo. Vercel's own Git integration
+rebuilds and promotes to production automatically on every push to `main` —
+no GitHub Actions secrets required for deploys.
+
+`.github/workflows/ci.yml` is a separate build gate: it type-checks and builds
+on every push/PR so a broken build is visible before merging.
+`.github/workflows/healthcheck.yml` pings the live site every 15 minutes (set
+the `SITE_URL` repo variable to `https://www.sujaygopal.space`).
+
+To deploy manually instead:
+
+```bash
+npm i -g vercel   # once
+vercel --prod
+```
+
+> **Note:** `DEPLOY.md`, `DEPLOYMENT.md`, `DOMAIN.md`, and `RELIABILITY.md` in
+> this repo were written against a `sujaygopal.com` domain that was never
+> purchased — the live domain is `sujaygopal.space`. Those files still need
+> the same correction this README just got.
+
+## Project structure
 
 ```
 ├── src/
-│   ├── Portfolio.tsx          # Main component (hero + sections)
-│   ├── api.ts                 # API client functions
-│   ├── main.tsx               # React entry point
-│   └── index.css              # Global styles + accessibility
+│   ├── Portfolio.tsx   # entire page: content data + all sections
+│   ├── api.ts          # client-side demo helpers
+│   ├── main.tsx        # React entry point
+│   └── index.css       # Tailwind import + accessibility rules
 ├── api/
-│   ├── regression-demo.ts     # Vercel function: /api/regression-demo
-│   └── rag-query.ts           # Vercel function: /api/rag-query
-├── mock-backend.js            # Local development backend (ESM)
-├── vite.config.ts             # Vite config + API proxy
-├── vercel.json                # Vercel deployment config
-├── DEPLOYMENT.md              # Deployment guide
+│   ├── regression-demo.ts   # Vercel function: /api/regression-demo
+│   └── rag-query.ts         # Vercel function: /api/rag-query
+├── public/
+│   ├── certs/           # certificate images used in Education & Credentials
+│   ├── og.png           # social-preview image
+│   └── status.html      # uptime status page
+├── mock-backend.js      # local-dev mock for the two demo endpoints
+├── vercel.json          # Vercel build config
 └── package.json
 ```
 
----
+`src/Portfolio.backup.tsx` is a snapshot from an earlier design pass and isn't
+imported anywhere — safe to delete once you've confirmed you don't need it.
 
-## 🔧 Configuration
+## Accessibility
 
-### Environment Variables
+- Respects `prefers-reduced-motion` (disables entrance/scroll animation, both
+  in JS via `useReducedMotion()` and in CSS via a matching media query)
+- Visible `:focus-visible` outline on all interactive elements
+- Semantic HTML landmarks (`header`, `section`, `footer`)
 
-Copy `.env.example` to `.env.local`:
-
-```bash
-VITE_API_URL=http://localhost:3001  # Local development
-# OR
-VITE_API_URL=https://sujaygopal.com/api  # Production
-```
-
-### Vite Proxy
-
-Configured in `vite.config.ts`:
-- `/api/*` routes to `http://localhost:3001` (development)
-- Auto-detects environment (uses Vercel functions in production)
-
----
-
-## 🎯 Live Demos
-
-### Model Regression Detector
-
-- **Endpoint:** `POST /api/regression-demo`
-- **Returns:** Array of test results with accuracy, confidence, drift detection
-- **Frontend:** Terminal component with "Run Detection" button
-
-```typescript
-// Example response
-[
-  {
-    timestamp: "2026-08-20T12:34:56Z",
-    accuracy: 0.924,
-    confidence: 0.951,
-    drift: "none",
-    prediction: "✓ Model stable, no regression detected"
-  }
-]
-```
-
-### RAG Query
-
-- **Endpoint:** `POST /api/rag-query`
-- **Body:** `{ query: "Tell me about RAG" }`
-- **Returns:** `{ query, answer, citations }`
-- **Frontend:** Query input + streaming response display
-
----
-
-## 🌐 Deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for complete deployment guide.
-
-### Quick Deploy to Vercel
-
-```bash
-# 1. Install Vercel CLI
-npm i -g vercel
-
-# 2. Deploy
-vercel
-
-# 3. Follow prompts to link GitHub repo
-```
-
-### Automatic CI/CD
-
-GitHub Actions workflow (`.github/workflows/deploy.yml`) automatically:
-- Runs TypeScript type checks
-- Builds the project
-- Deploys to Vercel (on `git push` to main)
-
-**Setup:**
-1. Add `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` to GitHub secrets
-2. Push to main branch → Auto-deploy ✨
-
----
-
-## 📦 API Integration
-
-### Wiring Up Real Backends
-
-#### Model Regression Detector
-
-Edit `api/regression-demo.ts`:
-
-```typescript
-const response = await fetch('https://your-ml-backend.com/api/check', {
-  method: 'POST',
-  body: JSON.stringify({ model_id: 'classifier' })
-});
-```
-
-#### RAG Pipeline
-
-Edit `api/rag-query.ts`:
-
-```typescript
-const response = await fetch('https://your-rag-backend.com/query', {
-  method: 'POST',
-  body: JSON.stringify({ query, top_k: 5 })
-});
-```
-
----
-
-## 🎨 Design System
-
-### Colors (CSS Variables)
-
-Dark theme:
-```css
---bg: #0a0e27;           /* Near-black */
---surface: #11152d;      /* Card backgrounds */
---accent: #fbbf24;       /* Amber highlight */
---text: #e8f0ff;         /* Cool white */
---muted: #6b7a9e;        /* Secondary text */
---success: #84cc16;      /* Green (success) */
-```
-
-### Typography
-
-- **Headlines:** Newsreader (serif), bold, 1.2 line-height
-- **Body:** Inter (sans), 16px, 1.6 line-height
-- **Mono:** IBM Plex Mono (code)
-
-### Spacing Scale
-
-4 / 8 / 12 / 16 / 24 / 40 / 64 px
-
----
-
-## 🧪 Testing
-
-```bash
-# Type checking
-npx tsc --noEmit
-
-# Build test
-npm run build
-
-# Preview production build
-npm run preview
-```
-
----
-
-## ♿ Accessibility
-
-- Respects `prefers-reduced-motion` — animations disabled on user preference
-- All interactive elements keyboard-reachable
-- Focus outlines on all buttons/links
-- WCAG AAA contrast (7.8:1 min)
-- Semantic HTML (nav, section, footer, etc.)
-
-Test in DevTools:
-```javascript
-// Simulate reduced motion
-matchMedia('(prefers-reduced-motion: reduce)').matches
-```
-
----
-
-## 📱 Mobile Responsiveness
-
-- Hero: Full viewport → stacked on mobile
-- Terminal: Full-width on 375px
-- Grid: 2 columns desktop → 1 column mobile
-- Touch-friendly: 44px+ tap targets
-
-Test locally:
-```bash
-# Chrome DevTools: Cmd+Shift+M
-# or
-npm run preview
-# and test on real device via local IP
-```
-
----
-
-## 🤝 Contributing
-
-Push to main:
-```bash
-git add .
-git commit -m "description"
-git push origin main
-```
-
-GitHub Actions automatically:
-1. Runs checks
-2. Builds project
-3. Deploys to Vercel
-
----
-
-## 📄 License
+## License
 
 MIT
 
 ---
 
-## 🔗 Links
-
 - **GitHub:** https://github.com/Sujay1709/sujay-mulagund_portfolio
-- **Portfolio:** https://sujaygopal.com (when deployed)
+- **Live site:** https://www.sujaygopal.space
 - **LinkedIn:** https://linkedin.com/in/sujay-mulagund-0ab588269
 - **Email:** sujaymulagund19@gmail.com
-
----
-
-## 🚀 Next Steps
-
-1. Buy domain: `sujaygopal.com`
-2. Deploy to Vercel (see DEPLOYMENT.md)
-3. Wire up real AI backends
-4. Add more live demos (LLM chat, prompt optimization, etc.)
-5. Monitor performance via Vercel Analytics
-
----
-
-Made with ❤️ by Sujay Mulagund
