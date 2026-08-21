@@ -90,10 +90,10 @@ npm i -g vercel   # once
 vercel --prod
 ```
 
-> **Note:** `DEPLOY.md`, `DEPLOYMENT.md`, `DOMAIN.md`, and `RELIABILITY.md` in
-> this repo were written against a `sujaygopal.com` domain that was never
-> purchased — the live domain is `sujaygopal.space`. Those files still need
-> the same correction this README just got.
+More detail lives in **[DEPLOY.md](./DEPLOY.md)** (local dev → shipping a
+change), **[DOMAIN.md](./DOMAIN.md)** (how the domain is wired, which URLs
+track production), and **[RELIABILITY.md](./RELIABILITY.md)** (CI gate, health
+check, rollback). `DEPLOYMENT.md` is superseded and safe to delete.
 
 ## Project structure
 

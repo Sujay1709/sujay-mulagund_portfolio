@@ -1,44 +1,58 @@
-# Getting sujaygopal.com live
+# Domain — sujaygopal.space
 
-I can't buy the domain for you (it needs your payment and account), but here is
-the exact path from "unregistered" to "live and secure."
+**Status: live.** The site is served at **https://www.sujaygopal.space**.
 
-## 1. Check availability & buy
+The domain was purchased **through Vercel** (Vercel Domains), not an external
+registrar. That matters: Vercel is both the registrar and the DNS provider, so
+there are **no DNS records to create by hand** — no A record, no CNAME, no
+nameserver change at a third party. Vercel wired it up on purchase.
 
-Search `sujaygopal.com` at a registrar. Recommended:
+## How it's currently configured
 
-- **Cloudflare Registrar** (dash.cloudflare.com) — sells .com at wholesale
-  (~$10–11/yr), no markup, free WHOIS privacy. Best long-term value.
-- **Porkbun** or **Namecheap** — cheap first-year deals, easy UI, free privacy.
+| Host | Behaviour |
+|---|---|
+| `www.sujaygopal.space` | Canonical — serves the production deployment |
+| `sujaygopal.space` (apex) | `308` permanent redirect → `www.sujaygopal.space` |
 
-Buy it with **WHOIS privacy on** (usually free) so your contact info stays private.
+HTTPS certificates are issued and renewed automatically by Vercel. Nothing to
+configure or renew.
 
-> Tip: also consider grabbing `sujaygopal.dev` — but `.com` is the one to own.
+## Verifying it's healthy
 
-## 2. Connect it to Vercel
+Vercel → project → **Settings → Domains**. Both entries should read **Valid
+Configuration**. Warning states and what they mean:
 
-Once the site is deployed on Vercel (see DEPLOY.md):
+- **"Invalid Configuration"** — DNS isn't pointing at Vercel. Only possible if
+  the domain was moved to an external registrar/DNS provider.
+- **"No Deployment"** — DNS is correct but the project has no production
+  deployment yet. Fix by pushing to `main` or running `vercel --prod`; the
+  domain itself is fine.
 
-1. Vercel → your project → **Settings → Domains → Add** → type `sujaygopal.com`.
-2. Add `www.sujaygopal.com` too and let Vercel redirect one to the other.
-3. Vercel shows the DNS records to create. At your registrar's DNS panel add:
-   - **A** record: `@` → `76.76.21.21`
-   - **CNAME** record: `www` → `cname.vercel-dns.com`
-   (If you use Cloudflare Registrar, its DNS panel is in the same dashboard.)
-4. Wait for propagation (usually minutes, up to a few hours). Vercel issues the
-   HTTPS certificate automatically once DNS resolves.
+## Which URLs actually track production
 
-## 3. Turn on the reliability loop
+Only these two update when you deploy:
 
-- Add the repo variable `SITE_URL = https://sujaygopal.com` (enables the
-  health-check workflow).
-- Create an UptimeRobot/Better Stack monitor on the same URL.
-- Confirm `https://sujaygopal.com/status.html` loads.
+- `https://www.sujaygopal.space` — the custom domain
+- The project's **no-hash** alias, e.g. `sujay-mulagund-portfolio.vercel.app`
 
-See **RELIABILITY.md** for the full picture.
+Every build also mints a permanent, frozen snapshot URL containing a random
+hash — `sujay-mulagund-portfolio-dfjr8i8bu-sujay1709s-projects.vercel.app`.
+**These never update.** They exist so you can inspect or roll back to one
+specific past build. Checking a hash URL and concluding "the deploy didn't
+work" is the single easiest mistake to make here.
 
-## 4. If you use Cloudflare for DNS (optional, extra resilience)
+## If you ever move the domain off Vercel
 
-Cloudflare in front of Vercel adds DDoS protection, caching, and analytics for
-free. If you do this, set the records to **DNS-only** (grey cloud) first to let
-Vercel validate the domain and issue TLS, then you can enable proxying.
+Should you transfer to an external registrar (Cloudflare, Porkbun, Namecheap),
+you'd then have to create the records yourself in that registrar's DNS panel:
+
+- **A** record: `@` → the IP Vercel shows under Settings → Domains
+- **CNAME** record: `www` → `cname.vercel-dns.com`
+
+Vercel displays the exact current values — copy them from the dashboard rather
+than from this file, since Vercel has been expanding its IP range.
+
+## Related
+
+- **RELIABILITY.md** — uptime monitoring and the health-check loop
+- **DEPLOY.md** — running locally and shipping changes

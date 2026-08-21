@@ -1,15 +1,15 @@
 # Run & Deploy Guide
 
 A complete, start-to-finish guide for running this portfolio locally and
-publishing it. No prior experience with the stack required.
+shipping changes to production.
+
+Live site: **https://www.sujaygopal.space**
 
 ---
 
 ## 1. Prerequisites
 
 You need **Node.js 18 or newer** (20+ recommended) and **npm** (bundled with Node).
-
-Check what you have:
 
 ```bash
 node -v
@@ -23,11 +23,9 @@ version manager like `nvm`.
 
 ## 2. Get the code
 
-If you downloaded the zip, unzip it and open a terminal **inside** the resulting
-`sujay-portfolio-2026` folder:
-
 ```bash
-cd path/to/sujay-portfolio-2026
+git clone https://github.com/Sujay1709/sujay-mulagund_portfolio.git
+cd sujay-mulagund_portfolio
 ```
 
 ---
@@ -53,94 +51,126 @@ npm run dev
 Vite prints a URL — usually **http://localhost:5173**. Open it in your browser.
 The page hot-reloads as you edit files; stop the server with `Ctrl + C`.
 
+To exercise the two live-demo endpoints locally, run the mock backend in a
+second terminal (`vite.config.ts` proxies `/api/*` to port 3001):
+
+```bash
+node mock-backend.js
+```
+
 ---
 
 ## 5. Build for production & preview
 
 ```bash
-npm run build      # type-checks, then outputs static files to dist/
+npm run build      # type-checks with tsc, then outputs static files to dist/
 npm run preview    # serves dist/ locally so you can test the real build
 ```
 
-`npm run preview` prints another localhost URL — open it to confirm the built
-site behaves exactly as it will once deployed.
+Always run `npm run build` before pushing. It runs `tsc -b` first, so it catches
+the type errors that would otherwise fail the deploy.
 
 ---
 
-## 6. Deploy to Vercel (free)
+## 6. Ship a change
 
-### 6a. Push to GitHub
+The repo is already connected to Vercel. **Pushing to `main` deploys to
+production automatically** — no secrets, no GitHub Actions setup, no manual step.
 
 ```bash
-git init
 git add .
-git commit -m "Portfolio site"
+git commit -m "describe the change"
+git push origin main
 ```
 
-Create an empty repo on github.com (e.g. `sujay-portfolio`), then:
+Vercel builds and promotes in ~30–60 seconds. Watch it at
+vercel.com → your project → **Deployments**.
+
+### Deploying manually instead
 
 ```bash
-git remote add origin https://github.com/Sujay1709/sujay-portfolio.git
-git branch -M main
-git push -u origin main
+npm i -g vercel   # once
+vercel --prod
 ```
 
-### 6b. Import into Vercel
+### Checking that it worked
 
-1. Go to https://vercel.com and sign in **with GitHub**.
-2. **Add New → Project** and pick the repo.
-3. Vercel auto-detects Vite and fills in:
-   - Framework preset: **Vite**
-   - Build command: `npm run build`
-   - Output directory: `dist`
-4. Click **Deploy**.
-
-In ~30 seconds you get a live URL like `https://sujay-portfolio.vercel.app`.
-Every `git push` to `main` redeploys automatically.
+Look at **https://www.sujaygopal.space** — or the project's no-hash alias
+(`sujay-mulagund-portfolio.vercel.app`). Do **not** judge by a deployment URL
+containing a random hash; those are permanent snapshots of one past build and
+never update. See DOMAIN.md.
 
 ---
 
-## 7. Add your own domain (later)
+## 7. The domain
 
-When you buy a domain (e.g. `sujaymulagund.com`):
-
-1. Vercel → project → **Settings → Domains → Add**, type the domain.
-2. Add the DNS records Vercel shows you at your registrar:
-   - **A** record: `@ → 76.76.21.21` (or the CNAME Vercel gives you)
-   - **CNAME** record: `www → cname.vercel-dns.com`
-3. HTTPS is issued automatically within a few minutes.
+Already live and configured — `sujaygopal.space`, registered through Vercel, so
+DNS and HTTPS are managed for you. Full details in **DOMAIN.md**.
 
 ---
 
-## 8. Add certificate images
+## 8. Edit your content
 
-1. Put each image in `public/certs/` (PNG or JPG, ideally square-ish,
-   ~600 px is plenty). Example: `public/certs/datacamp-aeds.png`.
-2. Open `src/Portfolio.tsx`, find the `certs` array, and uncomment / set the
-   `img` field to match the file path:
+Everything lives in **`src/Portfolio.tsx`**, in plain arrays near the top:
+`projects`, `experience`, `education`, `certs`, `toolkit`, and `playlists`.
+Page title and social tags are in `index.html`; the social image is
+`public/og.png`.
+
+To swap the Listening section from curated track lists to a real Spotify embed,
+set `SPOTIFY_EMBED_URL` near the top of `Portfolio.tsx` (Spotify: open a
+playlist → Share → Copy link, then change `/playlist/` to `/embed/playlist/`).
+
+---
+
+## 9. Add or replace certificate images
+
+1. Put each image in `public/certs/` (JPG or PNG, roughly 3:2, ~600 px wide is
+   plenty — the existing four are 50–110 KB each).
+2. Open `src/Portfolio.tsx`, find the `certs` array, and point `img` at it:
 
    ```ts
    {
      title: 'AI Engineer for Data Scientists (Associate)',
      issuer: 'DataCamp',
      date: 'Jul 2026',
-     img: '/certs/datacamp-aeds.png',   // <-- points at public/certs/...
-     href: 'https://www.datacamp.com/certificate/...',
+     img: '/certs/datacamp-ai-engineer.jpg',   // → public/certs/...
+     href: 'https://www.datacamp.com/certificate/...',  // optional verify link
    },
    ```
-3. Save — the dev server updates instantly. Add or remove entries freely.
+3. Save — the dev server updates instantly.
 
-> Paths that start with `/` resolve to the `public/` folder, so `/certs/x.png`
-> means `public/certs/x.png`.
+> Paths starting with `/` resolve to `public/`, so `/certs/x.jpg` means
+> `public/certs/x.jpg`.
 
 ---
 
-## 9. Edit your content
+## 10. The live-demo API
 
-Everything lives in **`src/Portfolio.tsx`**, in plain arrays near the top:
-`projects`, `experience`, `education`, `certs`, `toolkit`, and `systems`.
-Page title / social tags are in `index.html`; the social image is
-`public/og.png`.
+Two Vercel serverless functions back the "Live Systems" section. Vercel deploys
+anything in `/api` automatically — no config needed.
+
+| Route | File |
+|---|---|
+| `POST /api/regression-demo` | `api/regression-demo.ts` |
+| `POST /api/rag-query` | `api/rag-query.ts` |
+
+**Both currently return simulated output** — randomized accuracy/drift numbers
+and canned answers, not results from a real model. The section copy on the page
+calls them "real endpoints," which is technically true (they are live functions)
+but misleading about what they compute. Before showing this to anyone
+evaluating you, either wire in a real backend:
+
+```ts
+// api/regression-demo.ts
+const response = await fetch('https://your-ml-backend.com/api/regression-check', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ model_id: 'email-classifier' }),
+});
+return await response.json();
+```
+
+…or soften the copy in `Portfolio.tsx` to describe the demos as illustrative.
 
 ---
 
@@ -150,9 +180,12 @@ Page title / social tags are in `index.html`; the social image is
   Reinstall from nodejs.org and reopen the terminal.
 - **Port 5173 already in use** — another dev server is running; stop it, or
   Vite will offer the next free port automatically.
-- **Blank page after deploy** — make sure the Vercel output directory is `dist`
+- **Build fails with `Invalid vercel.json`** — the config only supports a small
+  set of keys. Keys like `domains` and the old object-form `env` are rejected;
+  domains are managed in the Vercel dashboard, not in this file.
+- **Blank page after deploy** — confirm the Vercel output directory is `dist`
   (it is by default for Vite).
-- **A cert card shows initials instead of an image** — the `img` path is unset
-  or the file isn't in `public/certs/`. See section 8.
-- **Fonts look plain on first paint** — the Google Fonts stylesheet loads at
-  runtime; it settles in a moment and falls back to system fonts gracefully.
+- **A cert card shows no image** — the `img` path is unset or the file isn't in
+  `public/certs/`. See section 9.
+- **Deploy "didn't take"** — you're probably looking at a hash-containing
+  deployment URL. See section 6.
